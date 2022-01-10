@@ -116,4 +116,16 @@ class TestFakerXml < Test::Unit::TestCase
 
     assert @tester.xml(length: 4, depth: 4, dtd: false).eql?(xml)
   end
+
+  def test_length_three_depth_three_with_comment
+    100.times do
+      xml = @tester.xml(length: 3, depth: 3, dtd: false, comment: true)
+      assert xml.scan(/<!--.*-->/).size.positive?
+    end
+  end
+
+  def test_emtpy_with_comment
+    xml = @tester.xml(length: 0, depth: 0, dtd: false, comment: true)
+    assert xml.scan(/<!--.*-->/).size.positive?
+  end
 end
